@@ -1,20 +1,23 @@
 package edu.hood.cs.it530.findyourdoctor;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import edu.hood.cs.it530.findyourdoctor.doctordetails.DoctorInsertionModule;
 
-@RestController
+@Component
+@Path("/hello")
 public class HelloController {
 	
 	@Autowired
 	private DoctorInsertionModule doctorInsertionModule;
 	
-	@RequestMapping("/")
+	@GET
 	public String index() {
-		doctorInsertionModule.getDetails();
+		//doctorInsertionModule.getDetails();
 		return "Greetings from Spring Boot! \n";
 	}
 
