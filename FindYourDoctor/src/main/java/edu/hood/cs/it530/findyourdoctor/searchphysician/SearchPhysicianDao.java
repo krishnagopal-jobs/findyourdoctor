@@ -65,11 +65,11 @@ public class SearchPhysicianDao extends AbstractDao {
                 + "WHERE\n"
                 + "    1 = 1 \n";
          // @formatter:on
-        
+
         if (zipCode != 0) {
             physicianSearchQuery += "                 AND l.zip_code = :zipCode \n";
         }
-        
+
         if (specialityId != 0) {
             physicianSearchQuery += "           AND s.speciality_id = :specialityId\n";
         }
