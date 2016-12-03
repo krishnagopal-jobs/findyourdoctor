@@ -41,9 +41,8 @@ public class SearchPhysicianDao {
         namedParameters.put("firstName", specialityId);
         namedParameters.put("lastName", specialityId);
 
-        String physicianSearchQuery;
         // @formatter:off
-        physicianSearchQuery = "SELECT \n"
+        String physicianSearchQuery = "SELECT \n"
                 + "    p.physician_id,\n"
                 + "    p.first_name,\n"
                 + "    p.last_name,\n"
@@ -65,10 +64,12 @@ public class SearchPhysicianDao {
                 + "    1 = 1 \n"
                 + "			AND l.zip_code = :zipCode \n"
                 + "	        AND s.speciality_id = :specialityId\n"
-                + "	        AND p.first_name = :firstName\n"
-                + "	        AND p.last_name = :lastName\n";
+                + "	        AND p.first_name like '%:firstName%'\n"
+                + "	        AND p.last_name = '%:lastName%'\n";
         // @formatter:on
 
+        System.out.println(physicianSearchQuery);
+        
         List<Physician> physicians = namedParameterJdbcTemplate.query(physicianSearchQuery, namedParameters,
                 new PhysicianMapper());
 
