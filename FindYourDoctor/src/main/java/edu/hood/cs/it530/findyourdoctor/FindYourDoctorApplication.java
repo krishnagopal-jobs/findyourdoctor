@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @PropertySource("classpath:application.properties")
 public class FindYourDoctorApplication {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		SpringApplication.run(FindYourDoctorApplication.class, args);
+    public static void main(String[] args) {
+        
+        SpringApplication.run(FindYourDoctorApplication.class, args);
 
-	}
+    }
 
 }

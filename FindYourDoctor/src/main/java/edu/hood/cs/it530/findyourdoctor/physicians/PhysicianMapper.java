@@ -1,4 +1,4 @@
-package edu.hood.cs.it530.findyourdoctor.searchphysician;
+package edu.hood.cs.it530.findyourdoctor.physicians;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +27,7 @@ public class PhysicianMapper implements RowMapper<Physician> {
 		
 		Speciality speciality = new Speciality();
 		physician.getSpecialities().add(speciality);
-		speciality.setSpecialityId(resultSet.getString("speciality_id"));
+		speciality.setSpecialityId(resultSet.getInt("speciality_id"));
 		speciality.setSpecialityName(resultSet.getString("speciality_name"));
 
 		return physician;
