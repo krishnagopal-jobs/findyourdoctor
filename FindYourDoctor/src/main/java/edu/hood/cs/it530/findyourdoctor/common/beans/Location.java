@@ -1,75 +1,96 @@
 package edu.hood.cs.it530.findyourdoctor.common.beans;
 
 public class Location {
-	
-	private int locationId;
-	
-	private String state;
-	
-	private String city;
-	
-	private String street;
-	
-	private String suite_number;
-	
-	private int zipCode;
-	
-	private int phoneNumber;
 
-	public int getLocationId() {
-		return locationId;
-	}
+    private int locationId;
 
-	public void setLocationId(int locationId) {
-		this.locationId = locationId;
-	}
+    private String state;
 
-	public String getState() {
-		return state;
-	}
+    private String city;
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    private String street;
 
-	public String getCity() {
-		return city;
-	}
+    private String suite_number;
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    private int zipCode;
 
-	public String getStreet() {
-		return street;
-	}
+    private int phoneNumber;
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public int getLocationId() {
+        return locationId;
+    }
 
-	public String getSuite_number() {
-		return suite_number;
-	}
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
 
-	public void setSuite_number(String suite_number) {
-		this.suite_number = suite_number;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public int getZipCode() {
-		return zipCode;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getSuite_number() {
+        return suite_number;
+    }
+
+    public void setSuite_number(String suite_number) {
+        this.suite_number = suite_number;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Location [locationId=");
+        builder.append(locationId);
+        builder.append(", state=");
+        builder.append(state);
+        builder.append(", city=");
+        builder.append(city);
+        builder.append(", street=");
+        builder.append(street);
+        builder.append(", suite_number=");
+        builder.append(suite_number);
+        builder.append(", zipCode=");
+        builder.append(zipCode);
+        builder.append(", phoneNumber=");
+        builder.append(phoneNumber);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

@@ -5,63 +5,82 @@ import java.util.List;
 
 public class Physician {
 
-	private int physicianId;
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Physician [physicianId=");
+        builder.append(physicianId);
+        builder.append(", firstName=");
+        builder.append(firstName);
+        builder.append(", lastName=");
+        builder.append(lastName);
+        builder.append(", middleInitial=");
+        builder.append(middleInitial);
+        builder.append(", location=");
+        builder.append(location);
+        builder.append(", specialities=");
+        builder.append(specialities);
+        builder.append("]");
+        return builder.toString();
+    }
 
-	private String firstName;
+    private int physicianId;
 
-	private String lastName;
+    private String firstName;
 
-	private String middleInitial;
+    private String lastName;
 
-	private Location location;
-	
-	private List<Speciality> specialities;
+    private String middleInitial;
 
-	public List<Speciality> getSpecialities() {
-		if(specialities == null) {
-			specialities = new ArrayList<>();
-		}
-		return specialities;
-	}
+    private Location location;
 
-	public Location getLocation() {
-		return location;
-	}
+    private List<Speciality> specialities;
 
-	public void setLocation(Location location) {
-		this.location = location;
-	}
+    public List<Speciality> getSpecialities() {
+        if (specialities == null) {
+            specialities = new ArrayList<>();
+        }
+        return specialities;
+    }
 
-	public int getPhysicianId() {
-		return physicianId;
-	}
+    public Location getLocation() {
+        return location;
+    }
 
-	public void setPhysicianId(int physicianId) {
-		this.physicianId = physicianId;
-	}
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public int getPhysicianId() {
+        return physicianId;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setPhysicianId(int physicianId) {
+        this.physicianId = physicianId;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getMiddleInitial() {
-		return middleInitial;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setMiddleInitial(String middleInitial) {
-		this.middleInitial = middleInitial;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMiddleInitial() {
+        return middleInitial;
+    }
+
+    public void setMiddleInitial(String middleInitial) {
+        this.middleInitial = middleInitial;
+    }
 
 }

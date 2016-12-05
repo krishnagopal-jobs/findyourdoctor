@@ -8,16 +8,16 @@ import edu.hood.cs.it530.findyourdoctor.physicians.PhysicianResource;
 import edu.hood.cs.it530.findyourdoctor.specialities.SpecialityResource;
 
 @Component
-@Path("/findYourDoctor")
+@Path(URIPath.BASE)
 public class FindYourDoctorAppResource {
 
-    @Path("/physicians")
+    @Path(URIPath.PHYSICIANS)
     public Class<PhysicianResource> getPhysicians() {
         return PhysicianResource.class;
     }
     
     
-    @Path("/specialities")
+    @Path(URIPath.SPECIALITIES)
     public Class<SpecialityResource> getSpecialities() {
         return SpecialityResource.class;
     }

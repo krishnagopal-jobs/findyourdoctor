@@ -81,5 +81,12 @@ public class PhysiciansDao extends AbstractDao {
 
         return physicians;
     }
+    
+    
+    public void insertPhysician(Physician physician) {
+        
+        
+        
+    }
 
 }

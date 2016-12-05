@@ -59,6 +59,8 @@ dependencies {
     
     compile("mysql:mysql-connector-java")
     
+    compile("com.thoughtworks.xstream:xstream:1.4.2")
+    
     //runtime("org.hsqldb:hsqldb")
     
     //testCompile("junit:junit")
