@@ -29,9 +29,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
 import com.thoughtworks.xstream.io.json.JsonWriter;
 
-import edu.hood.cs.it530.findyourdoctor.common.beans.Location;
 import edu.hood.cs.it530.findyourdoctor.common.beans.Physician;
-import edu.hood.cs.it530.findyourdoctor.locations.LocationsDao;
+import edu.hood.cs.it530.findyourdoctor.locations.LocationDao;
 
 @Component
 public class PhysicianResource {
@@ -41,17 +40,17 @@ public class PhysicianResource {
     @Context
     private UriInfo uriInfo;
 
-    private PhysiciansDao physicianDao;
+    private PhysicianDao physicianDao;
     
-    private LocationsDao locationDao;
+    private LocationDao locationDao;
 
     @Autowired(required = true)
-    public void setLocationDao(LocationsDao locationDao) {
+    public void setLocationDao(LocationDao locationDao) {
         this.locationDao = locationDao;
     }
 
     @Autowired(required = true)
-    public void setSearchPhysicianDao(PhysiciansDao physicianDao) {
+    public void setSearchPhysicianDao(PhysicianDao physicianDao) {
         this.physicianDao = physicianDao;
     }
 
@@ -84,21 +83,15 @@ public class PhysicianResource {
             }
         });
 
-        System.out.println(physician);
+        System.out.println(xstream.toXML("physician :" + physician));
 
         if (physician.getLocation() == null) {
             return Response.status(Status.BAD_REQUEST).entity("Location details are needed").build();
         }
         
-        Integer locationId = locationDao.retrieveLocation(physician.getLocation());
         
-        if(locationId == null) {
-            Location location = locationDao.insertLocation(physician.getLocation());
-            physician.setLocation(location);
-        } else {
-            physician.getLocation().setLocationId(locationId);
-        }
-
+        locationDao.insertLocation(physician.getLocation());
+        
         physicianDao.insertPhysician(physician);
         
         URI location = uriInfo.getAbsolutePathBuilder().path("{id}").resolveTemplate("id", physician.getPhysicianId()).build();

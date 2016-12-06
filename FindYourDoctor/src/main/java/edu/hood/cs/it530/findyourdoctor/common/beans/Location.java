@@ -10,11 +10,11 @@ public class Location {
 
     private String street;
 
-    private String suite_number;
+    private String suiteNumber;
 
     private int zipCode;
 
-    private int phoneNumber;
+    private long phoneNumber;
 
     public int getLocationId() {
         return locationId;
@@ -48,12 +48,12 @@ public class Location {
         this.street = street;
     }
 
-    public String getSuite_number() {
-        return suite_number;
+    public String getSuiteNumber() {
+        return suiteNumber == null ? "" : suiteNumber;
     }
 
-    public void setSuite_number(String suite_number) {
-        this.suite_number = suite_number;
+    public void setSuiteNumber(String suiteNumber) {
+        this.suiteNumber = suiteNumber;
     }
 
     public int getZipCode() {
@@ -64,11 +64,11 @@ public class Location {
         this.zipCode = zipCode;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -84,7 +84,7 @@ public class Location {
         builder.append(", street=");
         builder.append(street);
         builder.append(", suite_number=");
-        builder.append(suite_number);
+        builder.append(suiteNumber);
         builder.append(", zipCode=");
         builder.append(zipCode);
         builder.append(", phoneNumber=");

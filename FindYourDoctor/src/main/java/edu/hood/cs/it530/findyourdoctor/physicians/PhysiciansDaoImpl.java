@@ -16,12 +16,16 @@ import edu.hood.cs.it530.findyourdoctor.common.beans.Physician;
  *
  */
 @Component
-public class PhysiciansDao extends AbstractDao {
+public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
 
-    public PhysiciansDao(JdbcTemplate jdbcTemplate) {
+    public PhysiciansDaoImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
 
+    /* (non-Javadoc)
+     * @see edu.hood.cs.it530.findyourdoctor.physicians.PhysicianDao#retrievePhysicians(int, int, java.lang.String, java.lang.String)
+     */
+    @Override
     public List<Physician> retrievePhysicians(int zipCode, int specialityId, String firstName, String lastName)
             throws SQLException {
 
@@ -83,9 +87,36 @@ public class PhysiciansDao extends AbstractDao {
     }
     
     
+    /* (non-Javadoc)
+     * @see edu.hood.cs.it530.findyourdoctor.physicians.PhysicianDao#insertPhysician(edu.hood.cs.it530.findyourdoctor.common.beans.Physician)
+     */
+    @Override
     public void insertPhysician(Physician physician) {
         
+        String insertIntoPhysicianStatement = "";
+
+        insertIntoPhysicianStatement += "INSERT IGNORE INTO physicians \n";
+        insertIntoPhysicianStatement += "( \n";
+        insertIntoPhysicianStatement += "       first_name, \n";
+        insertIntoPhysicianStatement += "       middle_initial, \n";
+        insertIntoPhysicianStatement += "       last_name, \n";
+        insertIntoPhysicianStatement += "       location_id) \n";
+        insertIntoPhysicianStatement += " VALUES \n";
+        insertIntoPhysicianStatement += "( \n";
+        insertIntoPhysicianStatement += "       :first_name, \n";
+        insertIntoPhysicianStatement += "       :middle_initial, \n";
+        insertIntoPhysicianStatement += "       :last_name, \n";
+        insertIntoPhysicianStatement += "       :location_id \n";
+        insertIntoPhysicianStatement +=  ") \n";
         
+        Map<String, Object> namedParameters = new HashMap<>();
+        
+        namedParameters.put("first_name", physician.getFirstName());
+        namedParameters.put("middle_initial", physician.getMiddleInitial());
+        namedParameters.put("last_name", physician.getLastName());
+        namedParameters.put("location_id", physician.getLocation().getLocationId());
+
+        getNamedParameterJdbcTemplate().execute(insertIntoPhysicianStatement, namedParameters, ps -> ps.executeUpdate());
         
     }
 

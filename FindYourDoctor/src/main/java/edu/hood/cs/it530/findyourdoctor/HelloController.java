@@ -8,14 +8,14 @@ import javax.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import edu.hood.cs.it530.findyourdoctor.physicians.PhysiciansDao;
+import edu.hood.cs.it530.findyourdoctor.physicians.PhysicianDao;
 
 @Component
 @Path("/hello")
 public class HelloController {
 
     @Autowired
-    private PhysiciansDao searchPhysicianDao;
+    private PhysicianDao searchPhysicianDao;
 
     @GET
     public String index() throws SQLException {
