@@ -169,7 +169,18 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
                 ps -> ps.executeUpdate());
         
         retrievePhysician(physician);
+        
+        String deleteSpecialitiesForAPhysician = "";
+        deleteSpecialitiesForAPhysician += "delete from rln_physician_speciality \n";
+        deleteSpecialitiesForAPhysician += "    where physician_id = :physician_id";
+        
+        Map<String, Object> deletePhysicianSpecialityParams = new HashMap<>();
+        deletePhysicianSpecialityParams.put("physician_id", physician.getPhysicianId());
 
+        getNamedParameterJdbcTemplate().execute(deleteSpecialitiesForAPhysician, deletePhysicianSpecialityParams,
+                ps -> ps.executeUpdate());
+        
+        
         List<Speciality> specialities = physician.getSpecialities();
         for (Speciality speciality : specialities) {
             String insertPhysicianSpecialityMapping = "";
