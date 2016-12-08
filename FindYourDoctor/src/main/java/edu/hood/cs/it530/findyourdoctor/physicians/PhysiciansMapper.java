@@ -7,8 +7,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 import edu.hood.cs.it530.findyourdoctor.common.beans.Location;
 import edu.hood.cs.it530.findyourdoctor.common.beans.Physician;
+import edu.hood.cs.it530.findyourdoctor.common.beans.Speciality;
 
-public class PhysicianMapper implements RowMapper<Physician> {
+public class PhysiciansMapper implements RowMapper<Physician> {
 
 	@Override
 	public Physician mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
@@ -23,6 +24,11 @@ public class PhysicianMapper implements RowMapper<Physician> {
 		Location location = new Location();
 		physician.setLocation(location);
 		location.setLocationId(resultSet.getInt("location_id"));
+		
+		Speciality speciality = new Speciality();
+		physician.getSpecialities().add(speciality);
+		speciality.setSpecialityId(resultSet.getInt("speciality_id"));
+		speciality.setSpecialityName(resultSet.getString("speciality_name"));
 
 		return physician;
 	}

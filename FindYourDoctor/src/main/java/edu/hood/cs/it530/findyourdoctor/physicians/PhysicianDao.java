@@ -12,4 +12,6 @@ public interface PhysicianDao {
 
     void insertPhysician(Physician physician);
 
+    Physician retrievePhysician(Physician physician);
+
 }

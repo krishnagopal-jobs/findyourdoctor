@@ -3,6 +3,9 @@ package edu.hood.cs.it530.findyourdoctor.common.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Physician {
 
     @Override
@@ -36,6 +39,10 @@ public class Physician {
 
     private List<Speciality> specialities;
 
+    public void setSpecialities(List<Speciality> specialities) {
+        this.specialities = specialities;
+    }
+
     public List<Speciality> getSpecialities() {
         if (specialities == null) {
             specialities = new ArrayList<>();
@@ -64,6 +71,9 @@ public class Physician {
     }
 
     public void setFirstName(String firstName) {
+        if (firstName != null) {
+            firstName = firstName.trim();
+        }
         this.firstName = firstName;
     }
 
@@ -72,6 +82,9 @@ public class Physician {
     }
 
     public void setLastName(String lastName) {
+        if (lastName != null) {
+            lastName = lastName.trim();
+        }
         this.lastName = lastName;
     }
 
@@ -80,6 +93,9 @@ public class Physician {
     }
 
     public void setMiddleInitial(String middleInitial) {
+        if (middleInitial != null) {
+            middleInitial = middleInitial.trim();
+        }
         this.middleInitial = middleInitial;
     }
 

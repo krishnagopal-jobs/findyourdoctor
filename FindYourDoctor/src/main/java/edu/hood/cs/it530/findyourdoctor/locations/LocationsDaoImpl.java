@@ -36,6 +36,7 @@ public class LocationsDaoImpl extends AbstractDao implements LocationDao {
         namedParameters.put("city", location.getCity());
         namedParameters.put("zip_code", location.getZipCode());
         namedParameters.put("suite_number", location.getSuiteNumber());
+        namedParameters.put("phone_number", location.getPhoneNumber());
         
         
         String locationSearchQuery = "SELECT \n"
@@ -47,10 +48,13 @@ public class LocationsDaoImpl extends AbstractDao implements LocationDao {
                 + "         AND city = :city \n"
                 + "         AND street = :street \n"
                 + "        AND suite_number = :suite_number\n"
-                + "        AND zip_code = :zip_code";
+                + "        AND zip_code = :zip_code"
+                + "        AND phone_number = :phone_number";
         
 
         System.out.println(locationSearchQuery);
+        
+        System.out.println(namedParameters);
 
         Integer locationId = getNamedParameterJdbcTemplate().queryForObject(locationSearchQuery, namedParameters, Integer.class);
         

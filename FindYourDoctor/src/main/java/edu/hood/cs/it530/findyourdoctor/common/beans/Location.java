@@ -29,6 +29,9 @@ public class Location {
     }
 
     public void setState(String state) {
+        if(state != null) {
+            state = state.trim();
+        }
         this.state = state;
     }
 
@@ -37,6 +40,9 @@ public class Location {
     }
 
     public void setCity(String city) {
+        if(city != null) {
+            city = city.trim();
+        }
         this.city = city;
     }
 
@@ -45,6 +51,9 @@ public class Location {
     }
 
     public void setStreet(String street) {
+        if(street != null) {
+            street = street.trim();
+        }
         this.street = street;
     }
 
@@ -53,6 +62,9 @@ public class Location {
     }
 
     public void setSuiteNumber(String suiteNumber) {
+        if(suiteNumber != null) {
+            suiteNumber = suiteNumber.trim();
+        }
         this.suiteNumber = suiteNumber;
     }
 

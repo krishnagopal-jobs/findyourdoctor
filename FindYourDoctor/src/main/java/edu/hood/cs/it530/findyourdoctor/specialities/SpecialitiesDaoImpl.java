@@ -12,9 +12,9 @@ import edu.hood.cs.it530.findyourdoctor.common.AbstractDao;
 import edu.hood.cs.it530.findyourdoctor.common.beans.Speciality;
 
 @Component
-public class SpecialitiesDao extends AbstractDao{
+public class SpecialitiesDaoImpl extends AbstractDao{
 
-    public SpecialitiesDao(JdbcTemplate jdbcTemplate) {
+    public SpecialitiesDaoImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
     
@@ -32,5 +32,6 @@ public class SpecialitiesDao extends AbstractDao{
 
         return specialities;
     }
+    
     
 }
