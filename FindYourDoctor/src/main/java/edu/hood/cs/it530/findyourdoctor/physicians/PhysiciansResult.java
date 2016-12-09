@@ -6,24 +6,24 @@ import edu.hood.cs.it530.findyourdoctor.common.beans.Physician;
 
 public class PhysiciansResult {
     
-    private List<Physician> physicians;
+    private List<Physician> data;
     
-    private int count;
+    private int itemCount;
 
-    public List<Physician> getPhysicians() {
-        return physicians;
+    public List<Physician> getData() {
+        return data;
     }
 
-    public void setPhysicians(List<Physician> physicians) {
-        this.physicians = physicians;
+    public void setData(List<Physician> data) {
+        this.data = data;
     }
 
-    public int getCount() {
-        return count;
+    public int getItemCount() {
+        return itemCount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
     }
 
 }

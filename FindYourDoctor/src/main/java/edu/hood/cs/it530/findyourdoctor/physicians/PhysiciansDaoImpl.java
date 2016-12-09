@@ -61,7 +61,9 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
         physicianSearchQuery += "    l.suite_number,\n";
         physicianSearchQuery += "    l.zip_code,\n";
         physicianSearchQuery += "    l.state,\n";
-        physicianSearchQuery += "    l.phone_number\n";
+        physicianSearchQuery += "    l.phone_number,\n";
+        physicianSearchQuery += "    ps.speciality_id,\n";
+        physicianSearchQuery += "    s.speciality_name \n";
         physicianSearchQuery += "FROM\n";
         physicianSearchQuery += "    physicians p\n";
         physicianSearchQuery += "        JOIN\n";

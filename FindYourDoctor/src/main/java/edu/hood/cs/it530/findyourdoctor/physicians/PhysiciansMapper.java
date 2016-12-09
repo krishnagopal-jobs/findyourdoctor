@@ -11,26 +11,26 @@ import edu.hood.cs.it530.findyourdoctor.common.beans.Speciality;
 
 public class PhysiciansMapper implements RowMapper<Physician> {
 
-	@Override
-	public Physician mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+    @Override
+    public Physician mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
 
-		Physician physician = new Physician();
+        Physician physician = new Physician();
 
-		physician.setPhysicianId(resultSet.getInt("physician_id"));
-		physician.setFirstName(resultSet.getString("first_name"));
-		physician.setLastName(resultSet.getString("last_name"));
-		physician.setMiddleInitial(resultSet.getString("middle_initial"));
-		
-		Location location = new Location();
-		physician.setLocation(location);
-		location.setLocationId(resultSet.getInt("location_id"));
-		
-		Speciality speciality = new Speciality();
-		physician.getSpecialities().add(speciality);
-		speciality.setSpecialityId(resultSet.getInt("speciality_id"));
-		speciality.setSpecialityName(resultSet.getString("speciality_name"));
+        physician.setPhysicianId(resultSet.getInt("physician_id"));
+        physician.setFirstName(resultSet.getString("first_name"));
+        physician.setLastName(resultSet.getString("last_name"));
+        physician.setMiddleInitial(resultSet.getString("middle_initial"));
 
-		return physician;
-	}
+        Location location = new Location();
+        physician.setLocation(location);
+        location.setLocationId(resultSet.getInt("location_id"));
+
+        Speciality speciality = new Speciality();
+        physician.getSpecialities().add(speciality);
+        speciality.setSpecialityId(resultSet.getInt("speciality_id"));
+        speciality.setSpecialityName(resultSet.getString("speciality_name"));
+
+        return physician;
+    }
 
 }

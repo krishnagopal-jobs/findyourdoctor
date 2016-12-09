@@ -66,8 +66,8 @@ public class PhysicianResource {
         List<Physician> physicians = physicianDao.retrievePhysicians(zipCode, specialityId, firstName, lastName);
 
         PhysiciansResult physicianResult = new PhysiciansResult();
-        physicianResult.setPhysicians(physicians);
-        physicianResult.setCount(physicians.size());
+        physicianResult.setData(physicians);
+        physicianResult.setItemCount(physicians.size());
 
         return physicianResult;
     }
