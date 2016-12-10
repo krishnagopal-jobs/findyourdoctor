@@ -24,6 +24,11 @@ public class PhysiciansMapper implements RowMapper<Physician> {
         Location location = new Location();
         physician.setLocation(location);
         location.setLocationId(resultSet.getInt("location_id"));
+        location.setPhoneNumber(resultSet.getLong("phone_number"));
+        location.setState(resultSet.getString("state"));
+        location.setStreet(resultSet.getString("street"));
+        location.setSuiteNumber(resultSet.getString("suite_number"));
+        location.setZipCode(resultSet.getInt("zip_code"));
 
         Speciality speciality = new Speciality();
         physician.getSpecialities().add(speciality);

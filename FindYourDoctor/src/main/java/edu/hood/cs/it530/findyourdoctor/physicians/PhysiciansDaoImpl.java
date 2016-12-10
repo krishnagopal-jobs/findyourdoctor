@@ -31,7 +31,7 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
      * retrievePhysicians(int, int, java.lang.String, java.lang.String)
      */
     @Override
-    public List<Physician> retrievePhysicians(int zipCode, int specialityId, String firstName, String lastName)
+    public List<Physician> retrievePhysicians(int zipCode, int specialityId, String firstName, String lastName, String city)
             throws SQLException {
 
         Map<String, Object> namedParameters = new HashMap<>();
@@ -48,6 +48,10 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
 
         if (lastName != null && lastName.length() != 0) {
             namedParameters.put("last_name", lastName);
+        }
+        
+        if (city != null && city.length() != 0) {
+            namedParameters.put("city", city);
         }
 
         String physicianSearchQuery = "";
@@ -72,17 +76,22 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
             physicianSearchQuery += "        AND l.zip_code = :zip_code\n";
         }
         if (firstName != null && firstName.length() != 0) {
-            physicianSearchQuery += "        AND p.first_name LIKE \'%:firstName%\'\n";
+            physicianSearchQuery += "        AND p.first_name LIKE '%:firstName%'\n";
         }
         if (lastName != null && lastName.length() != 0) {
-            physicianSearchQuery += "        AND p.last_name = \'%:lastName%\'\n";
+            physicianSearchQuery += "        AND p.last_name = '%:lastName%'\n";
         }
-
+        if (city != null && city.length() != 0) {
+            physicianSearchQuery += "           AND l.city =  '%:city%' \n";
+        }
         physicianSearchQuery += "        LEFT JOIN\n    rln_physician_speciality ps ON ps.physician_id = p.physician_id\n";
+        
         if (specialityId != 0) {
             physicianSearchQuery += "        AND ps.speciality_id = :speciality_id\n";
         }
-        physicianSearchQuery += "        JOIN\n";
+        
+        physicianSearchQuery += "        LEFT JOIN\n";
+        
         physicianSearchQuery += "    specialities s ON ps.speciality_id = s.speciality_id\n";
 
         System.out.println(physicianSearchQuery);

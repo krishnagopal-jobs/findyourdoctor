@@ -19,7 +19,7 @@ public class HelloController {
 
     @GET
     public String index() throws SQLException {
-        searchPhysicianDao.retrievePhysicians(20147, 1, "firstName", "lastName");
+        searchPhysicianDao.retrievePhysicians(20147, 1, "firstName", "lastName", null);
         return "Greetings from Spring Boot! \n";
     }
 
