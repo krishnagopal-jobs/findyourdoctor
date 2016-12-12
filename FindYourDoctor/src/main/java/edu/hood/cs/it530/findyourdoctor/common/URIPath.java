@@ -10,6 +10,8 @@ public interface URIPath {
     
     String PHYSICIAN_ID = "physicianId";
     
+    String DELETE_PHYSICIAN_BY_ID = "deletePhysicianById";
+    
     
 
 }

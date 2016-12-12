@@ -312,4 +312,19 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
 
     }
 
+    @Override
+    public void deletePhysician(int physicianId) {
+        
+        String retrievePhysicianStatement = "";
+        retrievePhysicianStatement += "DELETE FROM physicians WHERE physician_id = :physician_id";
+
+        Map<String, Object> namedParameters = new HashMap<>();
+        namedParameters.put("physician_id", physicianId);
+        
+        getNamedParameterJdbcTemplate().execute(retrievePhysicianStatement, namedParameters,
+                ps -> ps.executeUpdate());
+        
+        
+    }
+
 }

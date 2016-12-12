@@ -58,6 +58,13 @@ public class PhysicianResource {
 
         return physician;
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(URIPath.DELETE_PHYSICIAN_BY_ID)
+    public void deletePhysician(@QueryParam("physicianId") int physicianId) throws SQLException {
+        physicianDao.deletePhysician(physicianId);
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

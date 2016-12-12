@@ -15,5 +15,7 @@ public interface PhysicianDao {
     Physician retrievePhysician(Physician physician);
 
     Physician retrievePhysicianDetails(int physicianId);
+    
+    void deletePhysician(int physicianId);
 
 }
