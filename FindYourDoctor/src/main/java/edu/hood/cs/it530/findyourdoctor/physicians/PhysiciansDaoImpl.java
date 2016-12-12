@@ -5,13 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.hood.cs.it530.findyourdoctor.common.AbstractDao;
+import edu.hood.cs.it530.findyourdoctor.common.beans.EducationalQualification;
+import edu.hood.cs.it530.findyourdoctor.common.beans.Insurance;
+import edu.hood.cs.it530.findyourdoctor.common.beans.InsuranceReview;
+import edu.hood.cs.it530.findyourdoctor.common.beans.PatientReview;
 import edu.hood.cs.it530.findyourdoctor.common.beans.Physician;
 import edu.hood.cs.it530.findyourdoctor.common.beans.Speciality;
+import edu.hood.cs.it530.findyourdoctor.educationalQualifications.EducationalQualificationsDao;
+import edu.hood.cs.it530.findyourdoctor.insurances.InsurancesDao;
+import edu.hood.cs.it530.findyourdoctor.patients.PatientsDao;
+import edu.hood.cs.it530.findyourdoctor.specialities.SpecialitiesDao;
 
 /**
  * @author kisna
@@ -20,8 +29,45 @@ import edu.hood.cs.it530.findyourdoctor.common.beans.Speciality;
 @Component
 public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
 
+    private SpecialitiesDao specialitiesDao;
+
+    private EducationalQualificationsDao educationalQualificationsDao;
+
+    private InsurancesDao insurancesDao;
+    
+    private PatientsDao patientsDao;
+
+
     public PhysiciansDaoImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
+    }
+
+    @Autowired
+    public void setSpecialitiesDao(SpecialitiesDao specialitiesDao) {
+        this.specialitiesDao = specialitiesDao;
+    }
+
+
+    /**
+     * @param insurancesDao
+     *            the reviewDao to set
+     */
+    @Autowired
+    public void setReviewDao(InsurancesDao insurancesDao) {
+        this.insurancesDao = insurancesDao;
+    }
+    
+    @Autowired
+    public void setEducationalQualificationsDao(EducationalQualificationsDao educationalQualificationsDao) {
+        this.educationalQualificationsDao = educationalQualificationsDao;
+    }
+
+    /**
+     * @param patientsDao the patientsDao to set
+     */
+    @Autowired
+    public void setPatientsDao(PatientsDao patientsDao) {
+        this.patientsDao = patientsDao;
     }
 
     /*
@@ -31,8 +77,8 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
      * retrievePhysicians(int, int, java.lang.String, java.lang.String)
      */
     @Override
-    public List<Physician> retrievePhysicians(int zipCode, int specialityId, String firstName, String lastName, String city)
-            throws SQLException {
+    public List<Physician> retrievePhysicians(int zipCode, int specialityId, String firstName, String lastName,
+            String city) throws SQLException {
 
         Map<String, Object> namedParameters = new HashMap<>();
         if (zipCode != 0) {
@@ -43,15 +89,15 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
         }
 
         if (firstName != null && firstName.length() != 0) {
-            namedParameters.put("first_name", specialityId);
+            namedParameters.put("first_name", "%" + firstName + "%");
         }
 
         if (lastName != null && lastName.length() != 0) {
-            namedParameters.put("last_name", lastName);
+            namedParameters.put("last_name", "%" + lastName + "%");
         }
-        
+
         if (city != null && city.length() != 0) {
-            namedParameters.put("city", city);
+            namedParameters.put("city", "%" + city + "%");
         }
 
         String physicianSearchQuery = "";
@@ -61,6 +107,7 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
         physicianSearchQuery += "    p.last_name,\n";
         physicianSearchQuery += "    p.middle_initial,\n";
         physicianSearchQuery += "    p.location_id,\n";
+        physicianSearchQuery += "    l.city,\n";
         physicianSearchQuery += "    l.street,\n";
         physicianSearchQuery += "    l.suite_number,\n";
         physicianSearchQuery += "    l.zip_code,\n";
@@ -76,25 +123,26 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
             physicianSearchQuery += "        AND l.zip_code = :zip_code\n";
         }
         if (firstName != null && firstName.length() != 0) {
-            physicianSearchQuery += "        AND p.first_name LIKE '%:firstName%'\n";
+            physicianSearchQuery += "        AND p.first_name LIKE :first_name \n";
         }
         if (lastName != null && lastName.length() != 0) {
-            physicianSearchQuery += "        AND p.last_name = '%:lastName%'\n";
+            physicianSearchQuery += "        AND p.last_name LIKE :last_name \n";
         }
         if (city != null && city.length() != 0) {
-            physicianSearchQuery += "           AND l.city =  '%:city%' \n";
+            physicianSearchQuery += "           AND l.city  LIKE  :city \n";
         }
-        physicianSearchQuery += "        LEFT JOIN\n    rln_physician_speciality ps ON ps.physician_id = p.physician_id\n";
-        
+        physicianSearchQuery += "        LEFT JOIN\n    rln_physician_speciality ps ON ps.physician_id = p.physician_id \n";
+
         if (specialityId != 0) {
             physicianSearchQuery += "        AND ps.speciality_id = :speciality_id\n";
         }
-        
+
         physicianSearchQuery += "        LEFT JOIN\n";
-        
+
         physicianSearchQuery += "    specialities s ON ps.speciality_id = s.speciality_id\n";
 
         System.out.println(physicianSearchQuery);
+        System.out.println(namedParameters);
 
         List<Physician> physicians = getNamedParameterJdbcTemplate().query(physicianSearchQuery, namedParameters,
                 new PhysiciansMapper());
@@ -145,6 +193,54 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
     /*
      * (non-Javadoc)
      * 
+     * @see edu.hood.cs.it530.findyourdoctor.physicians.PhysicianDao#
+     * retrievePhysician(edu.hood.cs.it530.findyourdoctor.common.beans.
+     * Physician)
+     */
+    @Override
+    public Physician retrievePhysicianDetails(int physicianId) {
+
+        String retrievePhysicianStatement = "";
+        retrievePhysicianStatement += "SELECT \n " + "   p.physician_id,\n" + "    p.first_name,\n"
+                + "    p.last_name,\n" + "    p.middle_initial,\n" + "    p.location_id,\n" + "    l.city,\n"
+                + "    l.street,\n" + "    l.suite_number,\n" + "    l.zip_code,\n" + "    l.state,\n"
+                + "    l.phone_number\n" + "FROM\n" + "    physicians p\n" + "        JOIN\n"
+                + "    locations l ON p.location_id = l.location_id\n" + "    and p.physician_id = :physician_id";
+
+        Map<String, Object> namedParameters = new HashMap<>();
+        namedParameters.put("physician_id", physicianId);
+
+        Physician physicianResult = getNamedParameterJdbcTemplate().queryForObject(retrievePhysicianStatement,
+                namedParameters, new PhysicianLocationMapper());
+
+        List<Speciality> specialities = specialitiesDao.getSpecialitiesForAPhysician(physicianId);
+
+        List<EducationalQualification> educationalQualifications = educationalQualificationsDao
+                .getEducationalQualificationsForAPhysician(physicianId);
+        
+        List<InsuranceReview> insuranceReviews = insurancesDao.getInsuranceReviewForAPhysician(physicianId);
+        
+        List<Insurance> acceptedInsurances = insurancesDao.retrieveAcceptedInsurancesByAPhysician(physicianId);
+        
+        List<PatientReview> patientReviews = patientsDao.retrievePatientReviewForAPhysician(physicianId);
+
+        physicianResult.setSpecialities(specialities);
+
+        physicianResult.setEducationalQualifications(educationalQualifications);
+        
+        physicianResult.setInsuranceReviews(insuranceReviews);
+        
+        physicianResult.setAcceptedInsurances(acceptedInsurances);
+        
+        physicianResult.setPatientReviews(patientReviews);
+
+        return physicianResult;
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see
      * edu.hood.cs.it530.findyourdoctor.physicians.PhysicianDao#insertPhysician(
      * edu.hood.cs.it530.findyourdoctor.common.beans.Physician)
@@ -178,20 +274,19 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
 
         getNamedParameterJdbcTemplate().execute(insertIntoPhysicianStatement, namedParameters,
                 ps -> ps.executeUpdate());
-        
+
         retrievePhysician(physician);
-        
+
         String deleteSpecialitiesForAPhysician = "";
         deleteSpecialitiesForAPhysician += "delete from rln_physician_speciality \n";
         deleteSpecialitiesForAPhysician += "    where physician_id = :physician_id";
-        
+
         Map<String, Object> deletePhysicianSpecialityParams = new HashMap<>();
         deletePhysicianSpecialityParams.put("physician_id", physician.getPhysicianId());
 
         getNamedParameterJdbcTemplate().execute(deleteSpecialitiesForAPhysician, deletePhysicianSpecialityParams,
                 ps -> ps.executeUpdate());
-        
-        
+
         List<Speciality> specialities = physician.getSpecialities();
         for (Speciality speciality : specialities) {
             String insertPhysicianSpecialityMapping = "";
@@ -209,7 +304,7 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
 
             specialityParams.put("speciality_id", speciality.getSpecialityId());
             specialityParams.put("physician_id", physician.getPhysicianId());
-            
+
             getNamedParameterJdbcTemplate().execute(insertPhysicianSpecialityMapping, specialityParams,
                     ps -> ps.executeUpdate());
 

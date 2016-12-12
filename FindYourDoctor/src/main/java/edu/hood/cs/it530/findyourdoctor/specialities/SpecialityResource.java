@@ -16,10 +16,10 @@ public class SpecialityResource {
 
     Logger logger = LoggerFactory.getLogger(SpecialityResource.class);
 
-    private SpecialitiesDaoImpl specialitiesDao;
+    private SpecialitiesDao specialitiesDao;
 
     @Autowired(required = true)
-    public void setSpecialitiesDao(SpecialitiesDaoImpl physicianDao) {
+    public void setSpecialitiesDao(SpecialitiesDao physicianDao) {
         this.specialitiesDao = physicianDao;
     }
 

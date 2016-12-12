@@ -5,9 +5,11 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import edu.hood.cs.it530.findyourdoctor.common.URIPath;
 import edu.hood.cs.it530.findyourdoctor.common.beans.Physician;
 import edu.hood.cs.it530.findyourdoctor.locations.LocationDao;
 
@@ -45,6 +48,16 @@ public class PhysicianResource {
     public void setSearchPhysicianDao(PhysicianDao physicianDao) {
         this.physicianDao = physicianDao;
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(URIPath.PHYSICIAN_ID)
+    public Physician retrievePhysician(@QueryParam("physicianId") int physicianId) throws SQLException {
+
+        Physician physician = physicianDao.retrievePhysicianDetails(physicianId);
+
+        return physician;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -63,6 +76,8 @@ public class PhysicianResource {
 
         return physicianResult;
     }
+    
+
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

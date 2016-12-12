@@ -8,25 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Physician {
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Physician [physicianId=");
-        builder.append(physicianId);
-        builder.append(", firstName=");
-        builder.append(firstName);
-        builder.append(", lastName=");
-        builder.append(lastName);
-        builder.append(", middleInitial=");
-        builder.append(middleInitial);
-        builder.append(", location=");
-        builder.append(location);
-        builder.append(", specialities=");
-        builder.append(specialities);
-        builder.append("]");
-        return builder.toString();
-    }
-
     private int physicianId;
 
     private String firstName;
@@ -38,6 +19,14 @@ public class Physician {
     private Location location;
 
     private List<Speciality> specialities;
+
+    private List<EducationalQualification> educationalQualifications;
+
+    private List<InsuranceReview> insuranceReviews;
+
+    private List<Insurance> acceptedInsurances;
+
+    private List<PatientReview> patientReviews;
 
     public void setSpecialities(List<Speciality> specialities) {
         this.specialities = specialities;
@@ -97,6 +86,54 @@ public class Physician {
             middleInitial = middleInitial.trim();
         }
         this.middleInitial = middleInitial;
+    }
+
+    public List<EducationalQualification> getEducationalQualifications() {
+        return educationalQualifications;
+    }
+
+    public void setEducationalQualifications(List<EducationalQualification> educationalQualifications) {
+        this.educationalQualifications = educationalQualifications;
+    }
+
+    public void setInsuranceReviews(List<InsuranceReview> insuranceReviews) {
+        this.insuranceReviews = insuranceReviews;
+    }
+
+    /**
+     * @return the insuranceReviews
+     */
+    public List<InsuranceReview> getInsuranceReviews() {
+        return insuranceReviews;
+    }
+
+    /**
+     * @return the acceptedInsurances
+     */
+    public List<Insurance> getAcceptedInsurances() {
+        return acceptedInsurances;
+    }
+
+    /**
+     * @param acceptedInsurances
+     *            the acceptedInsurances to set
+     */
+    public void setAcceptedInsurances(List<Insurance> acceptedInsurances) {
+        this.acceptedInsurances = acceptedInsurances;
+    }
+
+    /**
+     * @param patientReviews
+     */
+    public void setPatientReviews(List<PatientReview> patientReviews) {
+        this.patientReviews = patientReviews;
+    }
+
+    /**
+     * @return the patientReviews
+     */
+    public List<PatientReview> getPatientReviews() {
+        return patientReviews;
     }
 
 }

@@ -8,6 +8,8 @@ public interface URIPath {
     
     String SPECIALITIES = "/specialities";
     
+    String PHYSICIAN_ID = "physicianId";
+    
     
 
 }
