@@ -140,6 +140,7 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
         physicianSearchQuery += "        LEFT JOIN\n";
 
         physicianSearchQuery += "    specialities s ON ps.speciality_id = s.speciality_id\n";
+        physicianSearchQuery += "ORDER BY trim(last_name) ASC , trim(first_name) ASC \n";
 
         System.out.println(physicianSearchQuery);
         System.out.println(namedParameters);

@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
