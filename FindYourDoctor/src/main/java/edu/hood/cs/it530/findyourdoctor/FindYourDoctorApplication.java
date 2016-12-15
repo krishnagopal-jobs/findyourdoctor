@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"edu.hood.cs.it530"})
 @PropertySource("classpath:application.properties")
 public class FindYourDoctorApplication {
 
