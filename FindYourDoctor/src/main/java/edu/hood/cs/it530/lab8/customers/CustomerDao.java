@@ -13,6 +13,6 @@ public interface CustomerDao {
 
     List<Customer> getCustomersForABrach(String branchName);
     
-    void insertCustomer(Customer customer);
+    List<Customer> insertCustomer(Customer customer);
     
 }

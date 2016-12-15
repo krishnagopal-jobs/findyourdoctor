@@ -20,9 +20,10 @@ public class CustomerDaoImpl extends AbstractDao implements CustomerDao {
     @Override
     public List<Customer> getCustomersForABrach(String branchName) {
 
-        String retrieveCustomersForABranch = "SELECT \n" + "    c.customer_name,      c.customer_city\n" + "FROM\n"
-                + "    customer c\n" + "        JOIN\n" + "    borrower b ON c.customer_name = b.customer_name\n"
-                + "        JOIN\n" + "    loan l ON l.loan_number = b.loan_number\n";
+        String retrieveCustomersForABranch = "SELECT \n"
+                + "    c.customer_name,      c.customer_street,     c.customer_city\n" + "FROM\n" + "    customer c\n"
+                + "        JOIN\n" + "    borrower b ON c.customer_name = b.customer_name\n" + "        JOIN\n"
+                + "    loan l ON l.loan_number = b.loan_number\n";
         if (branchName != null) {
             retrieveCustomersForABranch += "        AND l.branch_name = :branch_name";
         }
@@ -42,7 +43,7 @@ public class CustomerDaoImpl extends AbstractDao implements CustomerDao {
 
     @Override
     @Transactional
-    public void insertCustomer(Customer customer) {
+    public List<Customer> insertCustomer(Customer customer) {
 
         String insertCustomerStatement = "insert into customer(customer_name, customer_street, customer_city)"
                 + " values (:customer_name, :customer_street, :customer_city)";
@@ -53,6 +54,13 @@ public class CustomerDaoImpl extends AbstractDao implements CustomerDao {
         namedParameters.put("customer_city", customer.getCity());
 
         getNamedParameterJdbcTemplate().execute(insertCustomerStatement, namedParameters, ps -> ps.executeUpdate());
+        
+        String selectAllCustomers = "select from customer ";
+        
+        List<Customer> customers = getNamedParameterJdbcTemplate().query(selectAllCustomers, namedParameters,
+                new CustomerMapper());
+        
+        return customers;
 
     }
 
