@@ -1,13 +1,13 @@
 package edu.hood.cs.it530.lab8.customers;
 
 public class Customer {
-    
+
     private String name;
-    
+
     private String street;
-    
+
     private String city;
-    
+
     public String getName() {
         return name;
     }
@@ -31,7 +31,5 @@ public class Customer {
     public void setCity(String city) {
         this.city = city;
     }
-
-
 
 }

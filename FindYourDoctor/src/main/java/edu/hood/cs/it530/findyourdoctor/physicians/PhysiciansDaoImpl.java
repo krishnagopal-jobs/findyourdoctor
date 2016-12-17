@@ -119,27 +119,29 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
         physicianSearchQuery += "    physicians p\n";
         physicianSearchQuery += "        JOIN\n";
         physicianSearchQuery += "    locations l ON p.location_id = l.location_id\n";
-        if (zipCode != 0) {
-            physicianSearchQuery += "        AND l.zip_code = :zip_code\n";
-        }
-        if (firstName != null && firstName.length() != 0) {
-            physicianSearchQuery += "        AND p.first_name LIKE :first_name \n";
-        }
-        if (lastName != null && lastName.length() != 0) {
-            physicianSearchQuery += "        AND p.last_name LIKE :last_name \n";
-        }
-        if (city != null && city.length() != 0) {
-            physicianSearchQuery += "           AND l.city  LIKE  :city \n";
-        }
         physicianSearchQuery += "        LEFT JOIN\n    rln_physician_speciality ps ON ps.physician_id = p.physician_id \n";
 
         if (specialityId != 0) {
-            physicianSearchQuery += "        AND ps.speciality_id = :speciality_id\n";
+            physicianSearchQuery += "    AND ps.speciality_id = :speciality_id\n";
         }
 
-        physicianSearchQuery += "        LEFT JOIN\n";
+        physicianSearchQuery += "        JOIN\n";
 
         physicianSearchQuery += "    specialities s ON ps.speciality_id = s.speciality_id\n";
+        physicianSearchQuery += "WHERE\n";
+        physicianSearchQuery += "    1 = 1 \n";
+        if (zipCode != 0) {
+            physicianSearchQuery += "    AND l.zip_code = :zip_code\n";
+        }
+        if (firstName != null && firstName.length() != 0) {
+            physicianSearchQuery += "    AND p.first_name LIKE :first_name \n";
+        }
+        if (lastName != null && lastName.length() != 0) {
+            physicianSearchQuery += "    AND p.last_name LIKE :last_name \n";
+        }
+        if (city != null && city.length() != 0) {
+            physicianSearchQuery += "    AND l.city  LIKE  :city \n";
+        }        
         physicianSearchQuery += "ORDER BY trim(last_name) ASC , trim(first_name) ASC \n";
 
         System.out.println(physicianSearchQuery);
@@ -206,7 +208,7 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
                 + "    p.last_name,\n" + "    p.middle_initial,\n" + "    p.location_id,\n" + "    l.city,\n"
                 + "    l.street,\n" + "    l.suite_number,\n" + "    l.zip_code,\n" + "    l.state,\n"
                 + "    l.phone_number\n" + "FROM\n" + "    physicians p\n" + "        JOIN\n"
-                + "    locations l ON p.location_id = l.location_id\n" + "    and p.physician_id = :physician_id";
+                + "    locations l ON p.location_id = l.location_id\n" + "    WHERE  p.physician_id = :physician_id";
 
         Map<String, Object> namedParameters = new HashMap<>();
         namedParameters.put("physician_id", physicianId);
