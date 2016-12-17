@@ -120,13 +120,7 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
         physicianSearchQuery += "        JOIN\n";
         physicianSearchQuery += "    locations l ON p.location_id = l.location_id\n";
         physicianSearchQuery += "        LEFT JOIN\n    rln_physician_speciality ps ON ps.physician_id = p.physician_id \n";
-
-        if (specialityId != 0) {
-            physicianSearchQuery += "    AND ps.speciality_id = :speciality_id\n";
-        }
-
         physicianSearchQuery += "        JOIN\n";
-
         physicianSearchQuery += "    specialities s ON ps.speciality_id = s.speciality_id\n";
         physicianSearchQuery += "WHERE\n";
         physicianSearchQuery += "    1 = 1 \n";
@@ -141,7 +135,10 @@ public class PhysiciansDaoImpl extends AbstractDao implements PhysicianDao {
         }
         if (city != null && city.length() != 0) {
             physicianSearchQuery += "    AND l.city  LIKE  :city \n";
-        }        
+        }
+        if (specialityId != 0) {
+            physicianSearchQuery += "    AND ps.speciality_id = :speciality_id\n";
+        }
         physicianSearchQuery += "ORDER BY trim(last_name) ASC , trim(first_name) ASC \n";
 
         System.out.println(physicianSearchQuery);
